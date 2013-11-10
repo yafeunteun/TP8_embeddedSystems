@@ -11,3 +11,4 @@ int main(int argc, char *argv[])
 }
 
 
+// port for my Arduino : /dev/ttyACM0

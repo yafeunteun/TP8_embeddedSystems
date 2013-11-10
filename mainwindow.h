@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QLineEdit>
+#include "qextserialport.h"
+#include "plot.h"
+
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -15,6 +20,7 @@ public:
     void createActions(void);
     void createMenus(void);
     void createStatusBar(void);
+    void test(void);
 
 public slots:
     void startReadingPort(void);
@@ -24,9 +30,20 @@ public slots:
     void clearCurve(void);
     void selectSerialPort(void);
     void about(void);
+    void onDataReceived(void);
+    void onDataAcquired(void);
+
+signals:
+    void dataAcquired();
 
 private:
-    QLabel* m_drawingZone;
+
+    QextSerialPort* m_port;
+
+    Plot* m_plot;
+    //QwtPlotCurve* m_curve;
+    //QVector<QPointF> m_points;
+
 
     QMenu* m_fileMenu;
     QMenu* m_viewMenu;

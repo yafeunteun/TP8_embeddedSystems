@@ -4,15 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG += qwt
 
+QT += core gui
+include(3rdparty/qextserialport/src/qextserialport.pri)
 TARGET = IHM
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    portselection.cpp \
+    plot.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    portselection.h \
+    plot.h
+
+
