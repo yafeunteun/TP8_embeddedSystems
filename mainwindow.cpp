@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "portselection.h"
+#include "serialport.h"
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QApplication>
@@ -119,7 +120,7 @@ void MainWindow::createStatusBar(void)
     statusBar()->addWidget(m_labelStatusBar);
     statusBar()->addWidget(m_dataMeasured);
 
-    m_port = new QextSerialPort;
+    m_port = new SerialPort;
 
 
 
@@ -163,7 +164,7 @@ void MainWindow::clearCurve(void)
 
 void MainWindow::selectSerialPort()
 {
-    m_port = new QextSerialPort;
+    m_port = new SerialPort;
 
     PortSelection *select = new PortSelection(m_port, this);
     select->exec();
@@ -180,22 +181,17 @@ void MainWindow::onDataReceived(void)
 
     if(RXfree == true)
     {
-        static quint8 messByte = 0;
-        if(messByte>4) messByte = 0;
-
-        m_port->getChar(&(m_RXmessage[messByte++]));
-        //m_port->readData(m_RXmessage, 1);
-        //messByte++;
-
-        if(m_RXmessage[messByte-1] == '\n')
+        if(m_port->canReadLine())
         {
-            m_RXmessage[messByte-2] = '\0';
-            messByte = 0;
+            m_port->readLine(m_RXmessage, 7);
+            m_RXmessage[strlen(m_RXmessage)-2] = '\0';
+            std::cout<<m_RXmessage<<std::endl;
             RXfree = false;
             emit dataAcquired();
         }
     }
 }
+
 
 
 void MainWindow::onDataAcquired(void)

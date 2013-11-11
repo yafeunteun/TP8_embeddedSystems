@@ -4,10 +4,9 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QLineEdit>
-#include "qextserialport.h"
 #include "plot.h"
 
-
+class SerialPort;
 
 
 class MainWindow : public QMainWindow
@@ -38,7 +37,7 @@ signals:
 
 private:
 
-    QextSerialPort* m_port;
+    SerialPort* m_port;
 
     Plot* m_plot;
     //QwtPlotCurve* m_curve;
